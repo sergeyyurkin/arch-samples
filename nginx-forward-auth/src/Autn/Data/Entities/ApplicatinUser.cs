@@ -1,4 +1,4 @@
-﻿namespace Auth.Data.Entities
+﻿namespace Identity.Api.Data.Entities
 {
     public class ApplicatinUser
     {

@@ -2,9 +2,9 @@
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Auth.Data;
-using Auth.Data.Entities;
-using Auth.Models.Identities;
+using Identity.Api.Data;
+using Identity.Api.Data.Entities;
+using Identity.Api.Models.Identities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 
-namespace Auth.Controllers
+namespace Identity.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

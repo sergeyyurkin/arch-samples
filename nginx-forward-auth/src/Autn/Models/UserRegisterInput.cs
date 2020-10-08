@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Auth.Models
+namespace Identity.Models
 {
     public class UserRegisterInput
     {

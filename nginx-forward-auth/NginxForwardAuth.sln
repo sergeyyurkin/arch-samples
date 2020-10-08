@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30524.135
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9D99E5F2-262F-42DD-BD21-1B0A7AAE103F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth", "src\Autn\Auth.csproj", "{76CAE253-27C2-463D-9FD2-9992A6B93876}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Api", "src\Autn\Identity.Api.csproj", "{76CAE253-27C2-463D-9FD2-9992A6B93876}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

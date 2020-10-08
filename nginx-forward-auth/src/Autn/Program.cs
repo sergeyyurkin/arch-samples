@@ -1,9 +1,9 @@
-using Auth.Data;
-using Auth.Extensions;
+using Identity.Api.Data;
+using Identity.Api.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Auth
+namespace Identity.Api
 {
     public class Program
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Auth.Data.Entities;
+using Identity.Api.Data.Entities;
 
-namespace Auth.Data
+namespace Identity.Api.Data
 {
     public class InitialDbBuilder
     {

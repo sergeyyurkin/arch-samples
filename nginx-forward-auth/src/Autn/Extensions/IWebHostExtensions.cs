@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Auth.Extensions
+namespace Identity.Api.Extensions
 {
     public static class IWebHostExtensions
     {
