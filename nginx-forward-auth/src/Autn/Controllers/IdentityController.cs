@@ -1,42 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using Auth.Data;
 using Auth.Data.Entities;
-using Auth.Models;
+using Auth.Models.Identities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Auth.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthController : ControllerBase
+    public class IdentityController : ControllerBase
     {
         private readonly AuthDbContext _context;
 
-        public AuthController(AuthDbContext context)
+        public IdentityController(AuthDbContext context)
         {
             _context = context;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User user)
-        {
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel input)
+        {   
             // Пароль для упрощения храниться в чистом виде!
             // В реальных проектах, необходимо хранить пароль в виде хэша с солью.
 
-            if (!await _context.Users.AnyAsync(x => x.Login == user.Login))
+            if (!await _context.Users.AnyAsync(x => x.Login == input.Login))
             {
+                var user = new ApplicatinUser
+                {
+                    Login = input.Login,
+                    Email = input.Email,
+                    Password = input.Password,
+                    FirstName = input.FirstName,
+                    LastName = input.LastName
+                };
+
                 await _context.AddAsync(user);
                 await _context.SaveChangesAsync();
 
@@ -47,23 +54,23 @@ namespace Auth.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] User user)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginModel input)
         {
             // Пароль для упрощения храниться в чистом виде!
             // В реальных проектах, необходимо хранить пароль в виде хэша с солью.
 
-            var dbUser = _context.Users.FirstOrDefaultAsync(x => x.Login == user.Login && x.Password == user.Password);
-            if (dbUser != null)
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Login == input.Login && x.Password == input.Password);
+            if (user != null)
             {
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login)
                 };
 
-                var identity = new ClaimsIdentity(claims, "ApplicationCookie", "login", null);
-                var principal = new ClaimsPrincipal(identity);
-
-                await HttpContext.SignInAsync("Cookies", principal);
+                var identity = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
                 return Ok();
             }
@@ -71,7 +78,16 @@ namespace Auth.Controllers
             return NotFound("User not found.");
         }
 
+        [HttpGet("logout")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> LogoutAsync()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Ok();
+        }
+
         [HttpGet("signin")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public IActionResult Signin()
         {
             return Ok("Please go to login and provide Login/Password");
@@ -79,12 +95,14 @@ namespace Auth.Controllers
 
         [Authorize]
         [HttpGet("auth")]
-        public async Task<IActionResult> Auth()
+        [ProducesResponseType(typeof(ApplicatinUser), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task<ActionResult<ApplicatinUser>> AuthenticateAsync()
         {
-            var claim = User.Claims.FirstOrDefault();
-            if (claim != null)
+            var login = User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType);
+            if (login != null)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.Login == claim.Value);
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Login == login);
                 if (user != null)
                 {
                     Response.Headers.Add("X-UserId", user.Id.ToString());
@@ -93,17 +111,11 @@ namespace Auth.Controllers
                     Response.Headers.Add("X-First-Name", user.FirstName);
                     Response.Headers.Add("X-Last-Name", user.LastName);
 
-                    return NoContent();
+                    return Ok(user);
                 }
             }
 
             return Unauthorized();
-        }
-
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync("Cookies");
-            return Ok();
         }
     }
 }

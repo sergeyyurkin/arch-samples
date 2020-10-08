@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auth.Data.Configurations
 {
-    public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
+    public class UserEntityTypeConfiguration : IEntityTypeConfiguration<ApplicatinUser>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<ApplicatinUser> builder)
         {
             builder.ToTable("users");
 

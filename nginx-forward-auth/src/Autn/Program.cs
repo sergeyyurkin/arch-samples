@@ -1,3 +1,5 @@
+using Auth.Data;
+using Auth.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -7,14 +9,14 @@ namespace Auth
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
 
-            //var host = CreateHostBuilder(args).Build();
-            //host.MigrateDbContext<AuthDbContext>((context) =>
-                //new AuthDbContextSeed()
-                //.SeedAsync(context)
-                //.Wait());
-            //host.Run();
+            host.MigrateDbContext<AuthDbContext>((context) =>
+            {
+                new InitialDbBuilder(context).CreateAsync().Wait();
+            });
+            
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

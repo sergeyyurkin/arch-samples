@@ -8,7 +8,6 @@ namespace Auth.Data
     {
         public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -17,6 +16,6 @@ namespace Auth.Data
             builder.ApplyConfiguration(new UserEntityTypeConfiguration());
         }
      
-        public DbSet<User> Users { get; set; }
+        public DbSet<ApplicatinUser> Users { get; set; }
     }
 }

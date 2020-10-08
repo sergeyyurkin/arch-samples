@@ -1,6 +1,6 @@
 ﻿namespace Auth.Data.Entities
 {
-    public class User
+    public class ApplicatinUser
     {
         public int Id { get; set; }
         public string Login { get; set; }
