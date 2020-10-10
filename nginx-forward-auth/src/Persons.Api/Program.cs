@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Persons.Api.Data;
+using Persons.Api.Extensions;
 
 namespace Persons.Api
 {
@@ -7,7 +9,9 @@ namespace Persons.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            host.MigrateDbContext<PersonDbContext>();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

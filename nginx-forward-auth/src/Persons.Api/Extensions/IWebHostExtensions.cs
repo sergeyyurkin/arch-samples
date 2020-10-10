@@ -7,7 +7,7 @@ namespace Persons.Api.Extensions
 {
     public static class IWebHostExtensions
     {
-        public static IHost MigrateDbContext<TContext>(this IHost host, Action<TContext> seedAction) where TContext : DbContext
+        public static IHost MigrateDbContext<TContext>(this IHost host, Action<TContext> seedAction = null) where TContext : DbContext
         {
             using (var scope = host.Services.CreateScope())
             {
