@@ -11,4 +11,5 @@ RUN dotnet publish "./src/Identity.Api/Identity.Api.csproj" -c Release -o /app/p
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine3.12
 WORKDIR /app
 COPY --from=build /app/publish .
+EXPOSE 80
 ENTRYPOINT ["dotnet", "Identity.Api.dll"]
