@@ -10,12 +10,7 @@ namespace Identity.Api
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
-            //host.MigrateDbContext<IdentityDbContext>((context) =>
-            //{
-            //    new InitialDbBuilder(context).CreateAsync().Wait();
-            //});
-            
+            host.MigrateDbContext<IdentityDbContext>();
             host.Run();
         }
 
