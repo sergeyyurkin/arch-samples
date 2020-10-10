@@ -21,7 +21,7 @@ namespace Identity.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AuthDbContext>(options =>
+            services.AddDbContext<IdentityDbContext>(options =>
             {
                 options.UseNpgsql(Configuration["CONNECTION_STRING"]);
             });

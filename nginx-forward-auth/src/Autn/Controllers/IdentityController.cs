@@ -18,9 +18,9 @@ namespace Identity.Api.Controllers
     [Route("[controller]")]
     public class IdentityController : ControllerBase
     {
-        private readonly AuthDbContext _context;
+        private readonly IdentityDbContext _context;
 
-        public IdentityController(AuthDbContext context)
+        public IdentityController(IdentityDbContext context)
         {
             _context = context;
         }
@@ -35,13 +35,11 @@ namespace Identity.Api.Controllers
 
             if (!await _context.Users.AnyAsync(x => x.Login == input.Login))
             {
-                var user = new ApplicatinUser
+                var user = new IdentityUser
                 {
                     Login = input.Login,
                     Email = input.Email,
-                    Password = input.Password,
-                    FirstName = input.FirstName,
-                    LastName = input.LastName
+                    Password = input.Password
                 };
 
                 await _context.AddAsync(user);
@@ -95,9 +93,9 @@ namespace Identity.Api.Controllers
 
         [Authorize]
         [HttpGet("auth")]
-        [ProducesResponseType(typeof(ApplicatinUser), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IdentityUser), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        public async Task<ActionResult<ApplicatinUser>> AuthenticateAsync()
+        public async Task<ActionResult<IdentityUser>> AuthenticateAsync()
         {
             var login = User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType);
             if (login != null)
@@ -108,8 +106,6 @@ namespace Identity.Api.Controllers
                     Response.Headers.Add("X-UserId", user.Id.ToString());
                     Response.Headers.Add("X-User", user.Login);
                     Response.Headers.Add("X-Email", user.Email);
-                    Response.Headers.Add("X-First-Name", user.FirstName);
-                    Response.Headers.Add("X-Last-Name", user.LastName);
 
                     return Ok(user);
                 }

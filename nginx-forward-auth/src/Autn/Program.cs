@@ -11,7 +11,7 @@ namespace Identity.Api
         {
             var host = CreateHostBuilder(args).Build();
 
-            host.MigrateDbContext<AuthDbContext>((context) =>
+            host.MigrateDbContext<IdentityDbContext>((context) =>
             {
                 new InitialDbBuilder(context).CreateAsync().Wait();
             });

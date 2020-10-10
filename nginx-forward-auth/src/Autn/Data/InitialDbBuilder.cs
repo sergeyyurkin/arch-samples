@@ -7,9 +7,9 @@ namespace Identity.Api.Data
 {
     public class InitialDbBuilder
     {
-        private readonly AuthDbContext _context;
+        private readonly IdentityDbContext _context;
 
-        public InitialDbBuilder(AuthDbContext context)
+        public InitialDbBuilder(IdentityDbContext context)
         {
             _context = context;
         }
@@ -24,15 +24,13 @@ namespace Identity.Api.Data
         {
             if (!_context.Users.Any())
             {
-                var dbUsers = new List<ApplicatinUser>
+                var dbUsers = new List<IdentityUser>
                 {
-                    new ApplicatinUser
+                    new IdentityUser
                     {
                         Login = "alice",
                         Password = "alice",
-                        Email = "alice@gmail.com",
-                        FirstName = "Alice",
-                        LastName = "Smith"
+                        Email = "alice@gmail.com"
                     }
                 };
 

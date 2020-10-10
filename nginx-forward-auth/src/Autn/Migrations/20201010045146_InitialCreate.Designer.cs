@@ -8,8 +8,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Identity.Api.Migrations
 {
-    [DbContext(typeof(AuthDbContext))]
-    [Migration("20201008014631_InitialCreate")]
+    [DbContext(typeof(IdentityDbContext))]
+    [Migration("20201010045146_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace Identity.Api.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Auth.Data.Entities.User", b =>
+            modelBuilder.Entity("Identity.Api.Data.Entities.IdentityUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,16 +30,6 @@ namespace Identity.Api.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnName("email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnName("first_name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnName("last_name")
                         .HasColumnType("text");
 
                     b.Property<string>("Login")

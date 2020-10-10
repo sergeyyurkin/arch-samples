@@ -4,18 +4,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Api.Data
 {
-    public class AuthDbContext : DbContext
+    public class IdentityDbContext : DbContext
     {
-        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
+        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            builder.ApplyConfiguration(new IdentityUserConfiguration());
         }
      
-        public DbSet<ApplicatinUser> Users { get; set; }
+        public DbSet<IdentityUser> Users { get; set; }
     }
 }

@@ -15,9 +15,7 @@ namespace Identity.Api.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     login = table.Column<string>(nullable: false),
                     password = table.Column<string>(nullable: false),
-                    email = table.Column<string>(nullable: false),
-                    first_name = table.Column<string>(nullable: false),
-                    last_name = table.Column<string>(nullable: false)
+                    email = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
