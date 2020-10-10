@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Persons.Api.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Persons.Api
 {
@@ -30,7 +31,7 @@ namespace Persons.Api
                 option.UseNpgsql(Configuration["CONNECTION_STRING"]);
             });
 
-            services.AddControllers();
+            services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddHealthChecks();
         }
 
