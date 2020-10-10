@@ -1,22 +1,13 @@
-using Identity.Api.Data;
-using Identity.Api.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Identity.Api
+namespace Persons.Api
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-
-            //host.MigrateDbContext<IdentityDbContext>((context) =>
-            //{
-            //    new InitialDbBuilder(context).CreateAsync().Wait();
-            //});
-            
-            host.Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

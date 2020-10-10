@@ -8,6 +8,7 @@ namespace Identity.Api.Data
     {
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

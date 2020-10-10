@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CCC6C0A6-C79
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Api", "src\Identity.Api\Identity.Api.csproj", "{C63388DA-8EA8-490A-8898-CF040B82F5ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persons.Api", "src\Persons.Api\Persons.Api.csproj", "{0A5BD000-92F4-4F10-9086-495A5A47113E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +34,21 @@ Global
 		{C63388DA-8EA8-490A-8898-CF040B82F5ED}.Release|x64.Build.0 = Release|Any CPU
 		{C63388DA-8EA8-490A-8898-CF040B82F5ED}.Release|x86.ActiveCfg = Release|Any CPU
 		{C63388DA-8EA8-490A-8898-CF040B82F5ED}.Release|x86.Build.0 = Release|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Debug|x64.Build.0 = Debug|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Debug|x86.Build.0 = Debug|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Release|x64.ActiveCfg = Release|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Release|x64.Build.0 = Release|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Release|x86.ActiveCfg = Release|Any CPU
+		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C63388DA-8EA8-490A-8898-CF040B82F5ED} = {CCC6C0A6-C794-452B-8FE7-1BF8580B1965}
+		{0A5BD000-92F4-4F10-9086-495A5A47113E} = {CCC6C0A6-C794-452B-8FE7-1BF8580B1965}
 	EndGlobalSection
 EndGlobal
