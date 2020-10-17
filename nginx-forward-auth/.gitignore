@@ -442,6 +442,7 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 # Helm
-*/charts
-requirements.lock
-Chart.lock
+**/requirements.lock
+**/requirements.yaml.bak
+**/*.tgz
+**/Chart.lock

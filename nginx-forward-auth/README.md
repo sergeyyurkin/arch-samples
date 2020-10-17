@@ -9,5 +9,6 @@ Successfully tagged identity-api:latest
 ```
 
 ```
+➜  nginx-forward-auth git:(master) helm dependency update .\src\Identity.Api\charts\
 
 ```
