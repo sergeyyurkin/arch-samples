@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30608.117
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CCC6C0A6-C794-452B-8FE7-1BF8580B1965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Api", "src\Identity.Api\Identity.Api.csproj", "{C63388DA-8EA8-490A-8898-CF040B82F5ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Api", "src\Identity.Api\Identity.Api.csproj", "{C63388DA-8EA8-490A-8898-CF040B82F5ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persons.Api", "src\Persons.Api\Persons.Api.csproj", "{0A5BD000-92F4-4F10-9086-495A5A47113E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persons.Api", "src\Persons.Api\Persons.Api.csproj", "{0A5BD000-92F4-4F10-9086-495A5A47113E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-items", "{5B121114-71E4-4F6C-9659-139E75676CBA}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C63388DA-8EA8-490A-8898-CF040B82F5ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,8 +50,14 @@ Global
 		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Release|x86.ActiveCfg = Release|Any CPU
 		{0A5BD000-92F4-4F10-9086-495A5A47113E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C63388DA-8EA8-490A-8898-CF040B82F5ED} = {CCC6C0A6-C794-452B-8FE7-1BF8580B1965}
 		{0A5BD000-92F4-4F10-9086-495A5A47113E} = {CCC6C0A6-C794-452B-8FE7-1BF8580B1965}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BBDF582-2F04-4D97-AC89-755D9525EB49}
 	EndGlobalSection
 EndGlobal
