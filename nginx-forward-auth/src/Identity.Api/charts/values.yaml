@@ -1,0 +1,44 @@
+replicaCount: 2
+
+image:
+  repository: identity-api
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8000
+
+probes:
+  liveness:
+    path: /health
+    timeoutSeconds: 2
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    port: 80
+  readiness:
+    path: /health
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    port: 80
+
+env:
+  aspnetcoreEnv: Development
+
+postgresql:
+  enabled: true
+  username: myuser
+  password: passwd
+  database: identitydb
+  persistence:
+    size: 0.1Gi
+  service:
+    port: "5432"
+
+ingress:
+  enabled: true
+  hosts:
+    - host: arch.homework
+      paths: ["/auth"]
+
+resources: {}
