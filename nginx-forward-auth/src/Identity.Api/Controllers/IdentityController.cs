@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Identity.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class IdentityController : ControllerBase
     {
         private readonly IdentityDbContext _context;
@@ -25,7 +26,8 @@ namespace Identity.Api.Controllers
             _context = context;
         }
 
-        [HttpPost("register")]
+        [HttpPost]
+        [Route("/register")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel input)
@@ -51,7 +53,8 @@ namespace Identity.Api.Controllers
             return BadRequest("User already exist.");
         }
 
-        [HttpPost("login")]
+        [HttpPost]
+        [Route("/login")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> LoginAsync([FromBody] LoginModel input)
@@ -62,13 +65,26 @@ namespace Identity.Api.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Login == input.Login && x.Password == input.Password);
             if (user != null)
             {
+
                 var claims = new List<Claim>
                 {
+                    //new Claim(ClaimTypes.Name, Guid.NewGuid().ToString())
+
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login)
                 };
 
-                var identity = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties();
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+                //var claims = new List<Claim>
+                //{
+                //    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login)
+                //};
+
+                //var identity = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
                 return Ok();
             }
@@ -76,7 +92,8 @@ namespace Identity.Api.Controllers
             return NotFound("User not found.");
         }
 
-        [HttpGet("logout")]
+        [HttpGet]
+        [Route("/logout")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> LogoutAsync()
         {
@@ -84,7 +101,8 @@ namespace Identity.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("signin")]
+        [HttpGet]
+        [Route("/signin")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public IActionResult Signin()
         {
@@ -92,7 +110,8 @@ namespace Identity.Api.Controllers
         }
 
         [Authorize]
-        [HttpGet("auth")]
+        [Route("/auth")]
+        [HttpGet]
         [ProducesResponseType(typeof(IdentityUser), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<ActionResult<IdentityUser>> AuthenticateAsync()

@@ -1,8 +1,8 @@
 replicaCount: 2
-fullnameOverride: identity
+fullnameOverride: persons
 
 image:
-  repository: syyurkin/identity-api
+  repository: syyurkin/persons-api
   tag: v2
   pullPolicy: IfNotPresent
 

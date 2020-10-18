@@ -20,7 +20,7 @@ namespace Persons.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Persone>> Get()
+        public async Task<ActionResult<Person>> Get()
         {
             if (int.TryParse(Request.Headers["X-UserId"], out int userId))
             {
@@ -37,7 +37,7 @@ namespace Persons.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Persone>> Post([FromBody] Persone persone)
+        public async Task<ActionResult<Person>> Post([FromBody] Person persone)
         {
             if (int.TryParse(Request.Headers["X-UserId"], out int userId))
             {
@@ -57,7 +57,7 @@ namespace Persons.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Persone persone)
+        public async Task<ActionResult> Put([FromBody] Person persone)
         {
             if (int.TryParse(Request.Headers["X-UserId"], out int userId))
             {

@@ -8,7 +8,6 @@ namespace Persons.Api.Data
     {
         public PersonDbContext(DbContextOptions options) : base(options)
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -17,6 +16,6 @@ namespace Persons.Api.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Persone> Persons { get; set; }
+        public DbSet<Person> Persons { get; set; }
     }
 }

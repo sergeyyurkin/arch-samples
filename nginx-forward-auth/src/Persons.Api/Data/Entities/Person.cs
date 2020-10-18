@@ -2,7 +2,7 @@
 
 namespace Persons.Api.Data.Entities
 {
-    public class Persone
+    public class Person
     {
         public int Id { get; set; }
         public int UserId { get; set; }

@@ -4,9 +4,9 @@ using Persons.Api.Data.Entities;
 
 namespace Persons.Api.Data.Configurations
 {
-    public class PersoneEntityTypeConfiguration : IEntityTypeConfiguration<Persone>
+    public class PersoneEntityTypeConfiguration : IEntityTypeConfiguration<Person>
     {
-        public void Configure(EntityTypeBuilder<Persone> builder)
+        public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.ToTable("persons");
             builder.HasKey(p => p.Id);

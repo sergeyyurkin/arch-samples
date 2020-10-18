@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: identity-proxy
+spec:
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - backend:
+          serviceName: identity
+          servicePort: 8000
+        path: /login
+      - backend:
+          serviceName: identity
+          servicePort: 8000
+        path: /signin
+      - backend:
+          serviceName: identity
+          servicePort: 8000
+        path: /logout
+      - backend:
+          serviceName: identity
+          servicePort: 8000
+        path: /register
+      - backend:
+          serviceName: identity
+          servicePort: 8000
+        path: /auth
