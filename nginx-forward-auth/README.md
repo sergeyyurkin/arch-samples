@@ -2,13 +2,15 @@
 
 
 ```
-➜  nginx-forward-auth git:(master) ✗ docker build -t identity-api -f src\Identity.Api\Dockerfile src\.
-...
-Successfully built 3cfe941c12d6
-Successfully tagged identity-api:latest
+docker build -t syyurkin/identity-api:0.1.0 -f src/Identity.Api/Dockerfile src/.
+
 ```
 
 ```
-➜  nginx-forward-auth git:(master) helm dependency update .\src\Identity.Api\charts\
+helm dependency update ./src/Identity.Api/charts/
 
+```
+
+```
+helm install identity ./src/Identity.Api/charts/
 ```

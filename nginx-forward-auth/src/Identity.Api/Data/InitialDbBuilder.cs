@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Identity.Api.Data.Entities;
 
@@ -24,7 +23,7 @@ namespace Identity.Api.Data
         {
             if (!_context.Users.Any())
             {
-                var dbUsers = new List<IdentityUser>
+                var dbUsers = new IdentityUser[]
                 {
                     new IdentityUser
                     {

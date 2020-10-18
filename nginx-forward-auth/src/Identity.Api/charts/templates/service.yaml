@@ -10,6 +10,6 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
-      name: web
+      name: http
   selector:
     {{- include "identity-api.selectorLabels" . | nindent 4 }}

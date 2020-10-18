@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration.UserSecrets;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Persons.Api.Data;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Persons.Api.Data;
 
 namespace Persons.Api
 {
@@ -26,12 +19,10 @@ namespace Persons.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PersonDbContext>(option =>
-            {
-                option.UseNpgsql(Configuration["CONNECTION_STRING"]);
-            });
+            string connectionString = Configuration["CONNECTION_STRING"];
+            services.AddDbContext<PersonDbContext>(opt => opt.UseNpgsql(connectionString));
 
-            services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddControllers();
             services.AddHealthChecks();
         }
 
@@ -40,8 +31,8 @@ namespace Persons.Api
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
                 endpoints.MapHealthChecks("/health");
+                endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync(context.Request.Host.Value);

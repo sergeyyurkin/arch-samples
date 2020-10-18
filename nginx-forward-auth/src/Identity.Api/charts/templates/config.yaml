@@ -4,6 +4,7 @@ metadata:
   name: identity-config
 data:
   ASPNETCORE_ENVIRONMENT: {{ .Values.env.aspnetcoreEnv }}
+  VERSION: {{ .Values.image.tag }}
 
 ---
 apiVersion: v1
@@ -12,4 +13,4 @@ metadata:
   name: identity-secret
 type: Opaque
 data:
-  CONNECTION_STRING: {{ printf "Host=%s;Port=%s;Database=%s;Username=%s;Password=%s;" (include "postgresql.fullname" .) .Values.postgresql.service.port .Values.postgresql.database .Values.postgresql.username .Values.postgresql.password | b64enc | quote }}
+  CONNECTION_STRING: {{ printf "Host=%s;Port=%s;Database=%s;Username=%s;Password=%s;" (include "postgresql.fullname" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase .Values.postgresql.postgresqlUsername .Values.postgresql.postgresqlPassword | b64enc | quote }}

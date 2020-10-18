@@ -48,5 +48,10 @@ spec:
                 configMapKeyRef:
                   name: identity-config
                   key: ASPNETCORE_ENVIRONMENT
+            - name: VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: VERSION
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

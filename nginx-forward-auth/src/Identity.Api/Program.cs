@@ -7,11 +7,21 @@ namespace Identity.Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-            host.MigrateDbContext<IdentityDbContext>();
-            host.Run();
+            try
+            {
+                var host = CreateHostBuilder(args).Build();
+                host.MigrateDbContext<IdentityDbContext>((dbContext) 
+                    => new InitialDbBuilder(dbContext).CreateAsync().Wait());
+                host.Run();
+
+                return 0;
+            }
+            catch
+            {
+                return 1;
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
