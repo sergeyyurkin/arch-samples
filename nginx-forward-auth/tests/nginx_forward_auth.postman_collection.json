@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Register",
+			"name": "Register new user",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -26,7 +26,10 @@
 						"id": "d7d47463-d2f6-456b-93a1-a47a804dd410",
 						"exec": [
 							"var userId = pm.response.json()\r",
-							"pm.collectionVariables.set(\"userId\", pm.variables.replaceIn(userId))"
+							"pm.collectionVariables.set(\"userId\", pm.variables.replaceIn(userId))\r",
+							"\r",
+							"tests[\"[INFO] Request: \" + JSON.stringify(request)] = true;\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true;"
 						],
 						"type": "text/javascript"
 					}
@@ -57,19 +60,26 @@
 			"response": []
 		},
 		{
-			"name": "Login",
+			"name": "Login user",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "ce08f278-533a-4140-a904-23ea71980491",
 						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;\r",
+							"\r",
+							"tests[\"[INFO] Request: \" + JSON.stringify(request)] = true;\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true;\r",
 							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -95,20 +105,27 @@
 			"response": []
 		},
 		{
-			"name": "Authentication",
+			"name": "Authentication user after logined",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "0aab83e6-170f-43c4-b989-9248478e1cf8",
 						"exec": [
-							"pm.test(\"authentication logined user\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
+							"tests[\"Status code is 204\"] = responseCode.code === 204;\r",
+							"\r",
+							"pm.test(\"Headers is equal user data\", function () {\r",
 							"    var headers = pm.response.headers;\r",
 							"    pm.expect(parseInt(headers.get(\"X-UserId\"))).to.eql(pm.collectionVariables.get(\"userId\"))\r",
 							"    pm.expect(headers.get(\"X-User\")).to.eql(pm.collectionVariables.get(\"login\"))\r",
 							"    pm.expect(headers.get(\"X-Email\")).to.eql(pm.collectionVariables.get(\"email\"))\r",
-							"});"
+							"});\r",
+							"\r",
+							"// tests[\"[INFO] Request: \" + JSON.stringify(request)] = true;\r",
+							"// tests[\"[INFO] Response: \" + responseBody] = true;\r",
+							"\r",
+							"tests[\"[INFO] Request Headers: \" + pm.request.headers] = true;\r",
+							"tests[\"[INFO] Response Headers: \" + pm.response.headers] = true;"
 						],
 						"type": "text/javascript"
 					}
@@ -166,14 +183,18 @@
 					"script": {
 						"id": "dc28d325-a8ba-4410-b7fc-2c8c4fe5b35b",
 						"exec": [
-							"pm.test(\"Create person for logined user\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
+							"pm.test(\"Person was created for logined user\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.userId).to.eql(pm.collectionVariables.get(\"userId\"));\r",
 							"    pm.expect(jsonData.firstName).to.eql(pm.collectionVariables.get(\"firstName\"));\r",
 							"    pm.expect(jsonData.lastName).to.eql(pm.collectionVariables.get(\"lastName\"));\r",
 							"    pm.expect(jsonData.birthDate).to.eql(pm.collectionVariables.get(\"birthDate\"));\r",
-							"});"
+							"});\r",
+							"\r",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+							"\r",
+							"tests[\"[INFO] Request: \" + JSON.stringify(request)] = true;\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true;"
 						],
 						"type": "text/javascript"
 					}
@@ -234,7 +255,12 @@
 							"    pm.expect(jsonData.firstName).to.eql(pm.collectionVariables.get(\"firstName\"))\r",
 							"    pm.expect(jsonData.lastName).to.eql(pm.collectionVariables.get(\"lastName\"))\r",
 							"    pm.expect(jsonData.birthDate).to.eql(pm.collectionVariables.get(\"birthDate\"));\r",
-							"})"
+							"})\r",
+							"\r",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"tests[\"[INFO] Request: \" + JSON.stringify(request)] = true;\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true;"
 						],
 						"type": "text/javascript"
 					}
@@ -274,7 +300,22 @@
 			"response": []
 		},
 		{
-			"name": "Logout",
+			"name": "Logout user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "edda6a4b-46de-4d44-8d9e-304daf837005",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;\r",
+							"\r",
+							"tests[\"[INFO] Request: \" + JSON.stringify(request)] = true;\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -308,9 +349,10 @@
 					"script": {
 						"id": "56983910-05e0-495f-a579-6f7436a0271b",
 						"exec": [
-							"pm.test(\"Get person after logout user\", function () {\r",
-							"    pm.response.to.have.status(200)\r",
-							"})"
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"\r",
+							"tests[\"[INFO] Request: \" + JSON.stringify(request)] = true;\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true;"
 						],
 						"type": "text/javascript"
 					}
@@ -350,16 +392,17 @@
 			"response": []
 		},
 		{
-			"name": "Unauthentication",
+			"name": "Authentication user after logout",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "60e440a4-040a-455d-b3e8-4e84cc713be9",
 						"exec": [
-							"pm.test(\"unauthentication logouted user\", function () {\r",
-							"    pm.response.to.have.status(401);\r",
-							"});"
+							"tests[\"Status code is 401\"] = responseCode.code === 401;\r",
+							"\r",
+							"tests[\"[INFO] Request: \" + JSON.stringify(request)] = true;\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true;"
 						],
 						"type": "text/javascript"
 					}
@@ -405,42 +448,42 @@
 	],
 	"variable": [
 		{
-			"id": "fd3b16f2-7c07-406a-b9a4-0f8806acd5a1",
+			"id": "375ce7df-989e-4f14-b437-9ed3e4aba75d",
 			"key": "baseUrl",
 			"value": "http://arch.homework"
 		},
 		{
-			"id": "73f05999-4563-4ee5-a4a0-a98bf689d388",
+			"id": "0d55318b-8aa9-401d-96e3-0f625fd64fdc",
 			"key": "userId",
 			"value": ""
 		},
 		{
-			"id": "fb71ab80-89e1-4d6b-a6be-0d04e27bff5a",
+			"id": "66fa3d14-d981-4694-b790-d7b1196c5e25",
 			"key": "email",
 			"value": ""
 		},
 		{
-			"id": "d5ed7f74-2b94-4d45-9abc-8b629efcba84",
+			"id": "35ccef8c-9641-49cb-bf2c-73b0e249d8c9",
 			"key": "firstName",
 			"value": ""
 		},
 		{
-			"id": "912e5e49-a9c6-40ab-920b-256177b68822",
+			"id": "0a82f2ed-1dbb-4c0d-a123-e997c80ba647",
 			"key": "lastName",
 			"value": ""
 		},
 		{
-			"id": "e4f40b26-1cc2-4e8f-8689-416d50abb924",
+			"id": "18057680-7498-4077-8d93-a18b107759a8",
 			"key": "login",
 			"value": ""
 		},
 		{
-			"id": "3f262dbf-7390-469d-8a04-54eaef8e4c5d",
+			"id": "51d451c7-cc46-40bd-a44b-c3e967e88c1e",
 			"key": "password",
 			"value": ""
 		},
 		{
-			"id": "5f02dfed-5719-42ea-9d74-a84e4aa76477",
+			"id": "cf7fbb25-142c-49dc-bfac-64412afb4432",
 			"key": "birthDate",
 			"value": ""
 		}
