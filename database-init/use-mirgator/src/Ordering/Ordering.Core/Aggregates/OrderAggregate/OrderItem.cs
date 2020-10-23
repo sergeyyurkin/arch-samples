@@ -9,5 +9,19 @@
 
         public Order Order { get; set; }
         public int OrderId { get; set; }
+
+        protected OrderItem()
+        {
+        }
+
+        public static OrderItem Create(string name, decimal price, int units)
+        {
+            return new OrderItem
+            {
+                ProductName = name,
+                UnitPrice = price,
+                Units = units
+            };
+        }
     }
 }
