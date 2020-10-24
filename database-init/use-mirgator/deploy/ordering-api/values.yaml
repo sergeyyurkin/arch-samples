@@ -1,0 +1,18 @@
+replicaCount: 2
+
+image:
+  repository: myapp/ordering.api
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  configmap:
+    - name: ConnectionString
+      key: ordering__ConnectionString
+  values:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Development

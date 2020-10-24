@@ -1,11 +1,7 @@
 {
   "profiles": {
     "Ordering.Migrator": {
-      "commandName": "Project",
-      "commandLineArgs": "-q",
-      "environmentVariables": {
-        "Version": "1.0"
-      }
+      "commandName": "Project"
     }
   }
 }

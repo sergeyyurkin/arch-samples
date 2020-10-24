@@ -1,0 +1,13 @@
+{{- $name := include "ordering-api.fullname" . -}}
+{{- $sqlsrv := include "sql-name" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cfg-{{ $name }}"
+  labels:
+    app: {{ template "ordering-api.name" . }}
+    chart: {{ template "ordering-api.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ordering__ConnectionString: Server={{ $sqlsrv }};Initial Catalog={{ .Values.inf.sql.ordering.db }};User Id={{ .Values.inf.sql.common.user }};Password={{ .Values.inf.sql.common.pwd }};
