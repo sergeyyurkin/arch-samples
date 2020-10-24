@@ -20,7 +20,7 @@ if ($clean) {
 Write-Host "Begin installation using Helm" -ForegroundColor Green
 
 $infras = ("sql-data")
-# $charts = ("ordering-api")
+$charts = ("ordering-api")
 
 if ($deployInfrastructure) {
     foreach ($infra in $infras) {
