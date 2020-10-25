@@ -9,7 +9,7 @@ metadata:
     chart: {{ template "ordering-migrator.chart" . }}
     release: {{ .Release.Name }}
 spec:
-  backoffLimit: 1
+  backoffLimit: 2
   template:
     metadata:
       labels:
