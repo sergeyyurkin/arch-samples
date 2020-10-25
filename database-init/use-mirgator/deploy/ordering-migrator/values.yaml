@@ -1,0 +1,12 @@
+image:
+  repository: myapp/ordering.migrator
+  tag: latest
+  pullPolicy: IfNotPresent
+
+env:
+  configmap:
+    - name: ConnectionString
+      key: ordering__ConnectionString
+
+job:
+  restartPolicy: Never

@@ -1,6 +1,7 @@
 Param(
     [parameter(Mandatory=$false)][string]$appName="myapp",
     [parameter(Mandatory=$false)][bool]$deployInfrastructure=$true,
+    [parameter(Mandatory=$false)][bool]$applyMigrations=$true,
     [parameter(Mandatory=$false)][bool]$deployCharts=$true,
     [parameter(Mandatory=$false)][bool]$clean=$true
     )
@@ -20,6 +21,7 @@ if ($clean) {
 Write-Host "Begin installation using Helm" -ForegroundColor Green
 
 $infras = ("sql-data")
+$migrators = ("ordering-migrator")
 $charts = ("ordering-api")
 
 if ($deployInfrastructure) {
@@ -30,6 +32,16 @@ if ($deployInfrastructure) {
 }
 else {
     Write-Host "Infrastructure charts aren't installed (-deployCharts is false)" -ForegroundColor Yellow
+}
+
+if ($applyMigrations) {
+    foreach ($migrator in $migrators) {
+        Write-Host "Apply migration job: $migrator" -ForegroundColor Green
+        helm install "$appName-$migrator" --values app.yaml --values inf.yaml --set app.name=$appName $migrator
+    }
+}
+else {
+    Write-Host "Migration charts aren't installed (-deployCharts is false)" -ForegroundColor Yellow
 }
 
 if ($deployCharts) {
